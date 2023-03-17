@@ -1,67 +1,86 @@
 <template>
-  <el-form :model="form" label-width="120px">
-    <el-form-item label="Activity type">
-      <el-checkbox-group v-model="form.type">
-        <el-checkbox label="Online activities" name="type" />
-        <el-checkbox label="Promotion activities" name="type" />
-        <el-checkbox label="Offline activities" name="type" />
-        <el-checkbox label="Simple brand exposure" name="type" />
-      </el-checkbox-group>
-    </el-form-item>
-    <el-form-item label="Resources">
-      <el-radio-group v-model="form.resource">
-        <el-radio label="Sponsor" />
-        <el-radio label="Venue" />
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="Activity form"> </el-form-item>
-    <div class="box" style="height: 200px">
-      <el-input v-model="form.desc" type="textarea" />
-      <el-icon><CirclePlus /></el-icon>
-      <el-input v-model="form.desc" type="textarea" />
-      <el-icon><CirclePlus /></el-icon> <el-input v-model="form.desc" type="textarea" />
-      <el-icon><CirclePlus /></el-icon> <el-input v-model="form.desc" type="textarea" />
-      <el-icon><CirclePlus /></el-icon> <el-input v-model="form.desc" type="textarea" />
-      <el-icon><CirclePlus /></el-icon>
+  <el-descriptions :column="2" title="User Info">
+    <el-descriptions-item label="Username">kooriookami</el-descriptions-item>
+    <el-descriptions-item label="Telephone">18100000000</el-descriptions-item>
+    <el-descriptions-item label="Place">Suzhou</el-descriptions-item>
+    <el-descriptions-item label="Remarks">
+      <el-tag size="small">School</el-tag>
+    </el-descriptions-item>
+    <el-descriptions-item label="Address">
+      <div class="d">
+        No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu PrNo.1188, Wuzhong Avenue,
+        Wuzhong District, Suzhou, Jiangsu ProNo.1188, Wuzhong Avenue, Wuzhong District, Suzhou,
+        Jiangsu ProNo.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu ProNo.1188, Wuzhong
+        Avenue, Wuzhong District, Suzhou, Jiangsu ProNo.1188, Wuzhong Avenue, Wuzhong District,
+        Suzhou, Jiangsu Proovince
+      </div>
+    </el-descriptions-item>
+  </el-descriptions>
+  <el-upload
+    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+    v-model:file-list="fileList"
+    @on-change="handleChange"
+    list-type="picture-card"
+    :show-file-list="false"
+    :auto-upload="false"
+    :limit="1"
+  >
+    <el-icon v-if="!fileList.length"><Plus /></el-icon>
+    <div v-if="fileList.length">
+      <img class="el-upload-list__item-thumbnail" :src="fileList[0].url" alt="" />
+      <span class="el-upload-list__item-actions">
+        <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(fileList[0])">
+          <el-icon><zoom-in /></el-icon>
+        </span>
+        <span
+          v-if="!disabled"
+          class="el-upload-list__item-delete"
+          @click="handleDownload(fileList[0])"
+        >
+          <el-icon><Download /></el-icon>
+        </span>
+        <span
+          v-if="!disabled"
+          class="el-upload-list__item-delete"
+          @click="handleRemove(fileList[0])"
+        >
+          <el-icon><Delete /></el-icon>
+        </span>
+      </span>
     </div>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">Create</el-button>
-      <el-button>Cancel</el-button>
-    </el-form-item>
-  </el-form>
-  <home-view ref="home"></home-view>
+  </el-upload>
+
+  <el-dialog v-model="dialogVisible">
+    <img w-full :src="dialogImageUrl" alt="Preview Image" />
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue'
-import HomeView from './HomeView.vue'
-const home = ref(null)
-onMounted(() => {
-  console.log(home.value)
-})
-// do not use same name with ref
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: ''
-})
+import { reactive, ref, onMounted, handleError } from 'vue'
+const fileList = ref([])
 
-const onSubmit = () => {
-  console.log('submit!')
+const dialogImageUrl = ref('')
+const dialogVisible = ref(false)
+const disabled = ref(false)
+const handleChange = () => {
+  console.log(fileList.value)
+}
+
+const handlePictureCardPreview = (file: any) => {
+  console.log(file)
+
+  dialogImageUrl.value = file.url!
+  dialogVisible.value = true
 }
 </script>
 
 <style>
-.box {
-  padding: 20px;
-  overflow-y: scroll;
-  border: 1px var(--el-border-color) solid;
-  border-radius: var(--el-border-radius-base);
-  margin: 12px 24px;
+.d {
+  top: -23px;
+  margin-left: 60px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
