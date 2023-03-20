@@ -1,5 +1,16 @@
 @import './base.css';
-
+.el-tabs--border-card {
+  color: red;
+  border: 0;
+}
+.el-tabs--border-card > .el-tabs__header {
+  border: 0;
+  background-color: #f6f6f6;
+}
+.el-tabs--border-card > .el-tabs__header .el-tabs__item {
+  border: 0;
+  border-radius: 4px 4px 0 0;
+}
 #app {
   max-width: 1280px;
   margin: 0 auto;

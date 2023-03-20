@@ -1,38 +1,116 @@
 <template>
-  <el-upload
-    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    list-type="picture-card"
-    v-model:file-list="fileList"
-    :auto-upload="false"
-    drag
-    :class="fileList.length && 'nihao'"
-    :on-preview="handlePictureCardPreview"
+  <el-form
+    ref="formRef"
+    :model="dynamicValidateForm"
+    label-suffix="werew"
+    label-width="120px"
+    class="demo-dynamic"
   >
-    <el-icon><Plus /></el-icon>
-  </el-upload>
-  <el-dialog v-model="dialogVisible">
-    <img w-full :src="dialogImageUrl" alt="Preview Image" />
-  </el-dialog>
+    <el-form-item
+      prop="email"
+      label="Email"
+      inline-message="true"
+      :rules="[
+        {
+          required: true,
+          message: 'Please input email address',
+          trigger: 'blur'
+        },
+        {
+          type: 'email',
+          message: 'Please input correct email address',
+          trigger: ['blur', 'change']
+        }
+      ]"
+    >
+      <el-input v-model="dynamicValidateForm.email" />
+    </el-form-item>
+    <el-form-item
+      v-for="(domain, index) in dynamicValidateForm.domains"
+      :key="domain.key"
+      :label="'Domain' + index"
+      :prop="'domains.' + index + '.value'"
+      :rules="{
+        required: true,
+        message: 'domain can not be null',
+        trigger: 'blur'
+      }"
+    >
+      <el-input v-model="domain.value" />
+      <el-button class="mt-2" @click.prevent="removeDomain(domain)">Delete</el-button>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
+      <el-button @click="addDomain">New domain</el-button>
+      <el-button @click="resetForm(formRef)">Reset</el-button>
+    </el-form-item>
+  </el-form>
+  <div class="c">
+    <div class="b">
+      <el-tabs type="border-card">
+        <el-tab-pane label="User">User</el-tab-pane>
+        <el-tab-pane label="Config">Config</el-tab-pane>
+        <el-tab-pane label="Role">Role</el-tab-pane>
+        <el-tab-pane label="Task">Task</el-tab-pane>
+      </el-tabs>
+    </div>
+  </div>
 </template>
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { Plus } from '@element-plus/icons-vue'
-import type { UploadFile } from 'element-plus'
-const fileList = ref([])
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
 
-const handlePictureCardPreview = (file: UploadFile) => {
-  dialogImageUrl.value = file.url!
-  dialogVisible.value = true
+<script lang="ts" setup>
+import { onMounted, reactive, ref } from 'vue'
+import type { FormInstance } from 'element-plus'
+import { useRoute } from 'vue-router'
+const r = useRoute()
+onMounted(() => {
+  console.log(history.state)
+})
+const formRef = ref<FormInstance>()
+const dynamicValidateForm = reactive<{
+  domains: DomainItem[]
+  email: string
+}>({
+  domains: [
+    {
+      key: 1,
+      value: ''
+    }
+  ],
+  email: ''
+})
+
+interface DomainItem {
+  key: number
+  value: string
+}
+
+const removeDomain = (item: DomainItem) => {
+  const index = dynamicValidateForm.domains.indexOf(item)
+  if (index !== -1) {
+    dynamicValidateForm.domains.splice(index, 1)
+  }
+}
+
+const addDomain = () => {
+  dynamicValidateForm.domains.push({
+    key: Date.now(),
+    value: ''
+  })
+}
+
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid) => {
+    if (valid) {
+      console.log('submit!')
+    } else {
+      console.log('error submit!')
+    }
+  })
+}
+
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
 }
 </script>
-<style scoped>
-.w {
-  width: 100px;
-  height: 100px;
-}
-.nihao :deep(.el-upload-list--picture-card .el-upload--picture-card) {
-  display: none;
-}
-</style>

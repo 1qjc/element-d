@@ -42,14 +42,28 @@
         <span
           v-if="!disabled"
           class="el-upload-list__item-delete"
-          @click="handleRemove(fileList[0])"
+          @click="
+            useRouter().push({
+              name: 'home',
+              state: { a: 2 }
+            })
+          "
         >
           <el-icon><Delete /></el-icon>
         </span>
       </span>
     </div>
   </el-upload>
-
+  <button
+    @click="
+      useRouter().push({
+        name: 'home',
+        state: { a: 2 }
+      })
+    "
+  >
+    1
+  </button>
   <el-dialog v-model="dialogVisible">
     <img w-full :src="dialogImageUrl" alt="Preview Image" />
   </el-dialog>
@@ -57,8 +71,14 @@
 
 <script lang="ts" setup>
 import { reactive, ref, onMounted, handleError } from 'vue'
+import { useRouter } from 'vue-router'
 const fileList = ref([])
-
+onMounted(() => {
+  useRouter().push({
+    name: 'home',
+    state: { a: 2 }
+  })
+})
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 const disabled = ref(false)
