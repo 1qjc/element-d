@@ -20,7 +20,12 @@ const router = createRouter({
     {
       path: '/table',
       name: 'table',
-      component: () => import('../views/Table.vue')
+      component: () => import('../views/TableVue.vue')
+    },
+    {
+      path: '/audio',
+      name: 'audio',
+      component: () => import('../views/AudioView.vue')
     }
   ]
 })
