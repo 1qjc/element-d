@@ -73,12 +73,7 @@
 import { reactive, ref, onMounted, handleError } from 'vue'
 import { useRouter } from 'vue-router'
 const fileList = ref([])
-onMounted(() => {
-  useRouter().push({
-    name: 'home',
-    state: { a: 2 }
-  })
-})
+onMounted(() => {})
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 const disabled = ref(false)

@@ -2,13 +2,19 @@
   <el-table
     :data="tableData"
     border
-    style="width: 800px"
+    style="width: 100%"
     :cell-style="setStyle"
-    :header-cell-style="{ textAlign: 'right' }"
+    :header-cell-style="setHeaderStyle"
   >
-    <el-table-column prop="date" label="Date" width="180" />
-    <el-table-column prop="name" label="Name" width="180" />
-    <el-table-column prop="address" label="Address" />
+    <el-table-column prop="date" fixed label="Date" width="170" />
+    <el-table-column prop="name" label="Name" width="130" />
+    <el-table-column prop="address" label="Address" min-width="210" />
+    <el-table-column prop="date" label="Date" width="170" />
+    <el-table-column prop="name" label="Name" width="130" />
+    <el-table-column prop="address" label="Address" min-width="210" />
+    <el-table-column prop="date" label="Date" width="170" />
+    <el-table-column prop="name" label="Name" width="130" />
+    <el-table-column prop="address" label="Address" min-width="210" />
   </el-table>
 </template>
 
@@ -16,33 +22,69 @@
 import type { CellStyle } from 'element-plus'
 const tableData = [
   {
-    date: new Date().toISOString(),
+    date: '2022-04-23 12:21:66',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   },
   {
-    date: '2016-05-02',
+    date: '2022-04-23 12:21:66',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   },
   {
-    date: '2016-05-04',
+    date: '2022-04-23 12:21:66',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   },
   {
-    date: '2016-05-01',
+    date: '2022-04-23 12:21:66',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2022-04-23 12:21:66',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2022-04-23 12:21:66',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2022-04-23 12:21:66',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2022-04-23 12:21:66',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2022-04-23 12:21:66',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2022-04-23 12:21:66',
     name: 'Tom',
     address: 'No. 189, Grove St, Los Angeles'
   }
 ]
 function setStyle({ row, column, rowIndex, columnIndex }): CellStyle<any> | undefined {
-  if (columnIndex == 2) {
-    return {
-      display: 'flex',
-      justifyContent: 'center',
-      textAlign: 'left'
-    }
+  return {
+    padding: '12px 30px',
+    height: '60px',
+    lineHeight: '18px'
+  }
+}
+function setHeaderStyle({ row, column, rowIndex, columnIndex }): CellStyle<any> | undefined {
+  return {
+    padding: '12px 30px',
+    height: '42px',
+    lineHeight: '18px',
+    backgroundColor: '#F7f7f7'
   }
 }
 </script>

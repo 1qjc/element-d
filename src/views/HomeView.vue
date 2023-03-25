@@ -25,20 +25,22 @@
     >
       <el-input v-model="dynamicValidateForm.email" />
     </el-form-item>
-    <el-form-item
-      v-for="(domain, index) in dynamicValidateForm.domains"
-      :key="domain.key"
-      :label="'Domain' + index"
-      :prop="'domains.' + index + '.value'"
-      :rules="{
-        required: true,
-        message: 'domain can not be null',
-        trigger: 'blur'
-      }"
-    >
-      <el-input v-model="domain.value" />
-      <el-button class="mt-2" @click.prevent="removeDomain(domain)">Delete</el-button>
+    <el-form-item prop="domains">
+      <div
+        v-for="(domain, index) in dynamicValidateForm.domains"
+        :key="domain.key"
+        :prop="'domains.' + index + '.value'"
+        :rules="{
+          required: true,
+          message: 'domain can not be null',
+          trigger: 'blur'
+        }"
+      >
+        <el-input v-model="domain.value" />
+        <el-button class="mt-2" @click.prevent="removeDomain(domain)">Delete</el-button>
+      </div>
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
       <el-button @click="addDomain">New domain</el-button>
@@ -111,6 +113,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
+  console.log(formEl)
   formEl.resetFields()
+  dynamicValidateForm.domains = []
 }
 </script>
