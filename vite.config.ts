@@ -14,7 +14,10 @@ export default defineConfig({
     AutoImport({
       dts: true,
       imports: ['vue'],
-      resolvers: [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver()],
+      eslintrc: {
+        enabled: true
+      }
     }),
     Components({
       resolvers: [ElementPlusResolver()]
