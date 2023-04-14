@@ -8,7 +8,7 @@
       "@/*": ["./src/*"]
     }
   },
-
+  "files": ["auto-imports.d.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"
